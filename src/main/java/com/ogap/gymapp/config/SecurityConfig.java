@@ -33,8 +33,8 @@ public class SecurityConfig {
                   .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                   .requestMatchers("/api/public/**").permitAll()
                   .anyRequest().authenticated())
-              .httpBasic(org.springframework.security.config.Customizer.withDefaults())
-                  .oauth2ResourceServer(oauth2 -> oauth2
+            .httpBasic(org.springframework.security.config.Customizer.withDefaults())
+            .oauth2ResourceServer(oauth2 -> oauth2
                   .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
       return http.build();

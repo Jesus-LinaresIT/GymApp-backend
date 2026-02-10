@@ -1,5 +1,6 @@
 package com.ogap.gymapp.modules.training;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class Routine {
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "phase_id", nullable = false)
+   @JsonIgnore
    private Phase phase;
 
    @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL, orphanRemoval = true)
