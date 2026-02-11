@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+import com.ogap.gymapp.modules.training.Routine;
+import com.ogap.gymapp.modules.user.User;
+
 @Repository
 public interface WorkoutLogRepository extends JpaRepository<WorkoutLog, UUID> {
+   boolean existsByUserAndExercise_Routine(User user, Routine routine);
 }
