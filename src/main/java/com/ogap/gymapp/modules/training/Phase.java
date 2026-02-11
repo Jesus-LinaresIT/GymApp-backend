@@ -1,5 +1,6 @@
 package com.ogap.gymapp.modules.training;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,7 @@ public class Phase {
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "course_id", nullable = false)
+   @JsonIgnore
    private Course course;
 
    @OneToMany(mappedBy = "phase", cascade = CascadeType.ALL, orphanRemoval = true)

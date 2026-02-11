@@ -1,5 +1,6 @@
 package com.ogap.gymapp.modules.training;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class Exercise {
 
    private String muscleGroup;
 
+   @Column(nullable = false, name = "sets_target")
    private Integer sets;
 
    private String repsTarget; // String to allow ranges like "8-12" or specific notes
@@ -39,5 +41,6 @@ public class Exercise {
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "routine_id", nullable = false)
+   @JsonIgnore
    private Routine routine;
 }
