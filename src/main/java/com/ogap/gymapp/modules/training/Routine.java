@@ -28,6 +28,11 @@ public class Routine {
    @Column(nullable = false)
    private String dayLabel; // e.g., 'A', 'B'
 
+   private String title;
+
+   @Column(nullable = false)
+   private Integer orderIndex;
+
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "phase_id", nullable = false)
    @JsonIgnore

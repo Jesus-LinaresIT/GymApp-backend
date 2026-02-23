@@ -39,6 +39,9 @@ public class Exercise {
 
    private Integer restSeconds;
 
+   @Column(nullable = false)
+   private Integer orderIndex;
+
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "routine_id", nullable = false)
    @JsonIgnore

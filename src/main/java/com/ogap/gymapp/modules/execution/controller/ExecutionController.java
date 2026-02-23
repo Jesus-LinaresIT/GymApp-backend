@@ -1,5 +1,6 @@
 package com.ogap.gymapp.modules.execution.controller;
 
+import com.ogap.gymapp.helpers.SecurityPass;
 import com.ogap.gymapp.modules.execution.dto.WorkoutLogRequestDTO;
 import com.ogap.gymapp.modules.execution.service.WorkoutService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,27 +22,20 @@ import java.util.List;
 @Tag(name = "Execution", description = "Workout execution and logging")
 public class ExecutionController {
 
-   private final WorkoutService workoutService;
+    private final WorkoutService workoutService;
+    private final SecurityPass securityPass;
 
-   @PostMapping("/log")
-   @Operation(summary = "Log Workout", description = "Logs a list of executed sets for a workout")
-   public ResponseEntity<Void> logWorkout(
+    @PostMapping("/log")
+    @Operation(summary = "Log Workout", description = "Logs a list of executed sets for a workout")
+    public ResponseEntity<Void> logWorkout(
          @AuthenticationPrincipal Jwt jwt,
          @RequestBody List<WorkoutLogRequestDTO> logs) {
-       String clerkId;
 
-       if (jwt != null) {
-           // Caso Producción: Tenemos token real de Clerk
-           clerkId = jwt.getSubject();
-       } else {
-           // Caso Desarrollo/Prueba: No hay token, usamos el ID del SQL seed
-           // IMPORTANTE: Este ID debe coincidir con el que pusiste en la tabla 'user_progress'
-           clerkId = "user_fantasma_clerk"; // <--- Pon aquí el UUID o texto que usaste en el INSERT de SQL
-           System.out.println("⚠️ ADVERTENCIA: Usando ID de prueba hardcodeado: " + clerkId);
-       }
+        //TODO: REMOVE THIS WHEN EXIST A REAL JWT
+       String clerkId = securityPass.getCoachId(jwt);
 
        workoutService.logWorkout(clerkId, logs);
 
       return ResponseEntity.ok().build();
-   }
+    }
 }
