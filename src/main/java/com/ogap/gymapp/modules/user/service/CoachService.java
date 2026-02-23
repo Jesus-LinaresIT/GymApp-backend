@@ -77,7 +77,7 @@ public class CoachService {
 
                 return User.builder()
                         .id(student.getId())
-                        .fullName(student.getFullName())
+                        .email(student.getEmail())
                         .hasActiveSubscription(student.isHasActiveSubscription())
                         .build();
             })
