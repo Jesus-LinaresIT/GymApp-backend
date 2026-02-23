@@ -1,5 +1,6 @@
 package com.ogap.gymapp.modules.training.controller;
 
+import com.ogap.gymapp.helpers.SecurityPass;
 import com.ogap.gymapp.modules.training.dto.RoutineDayResponseDTO;
 import com.ogap.gymapp.modules.training.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,22 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrainingController {
 
    private final CourseService courseService;
+   private final SecurityPass securityHelper;
 
    @GetMapping("/routine/today")
    @Operation(summary = "Get Today's Routine", description = "Returns the routine for the current day based on user progress")
    public ResponseEntity<RoutineDayResponseDTO> getRoutineForToday(@AuthenticationPrincipal Jwt jwt) {
-       String userId;
 
-       if (jwt != null) {
-           // Caso Producción: Tenemos token real de Clerk
-           userId = jwt.getSubject();
-       } else {
-           // Caso Desarrollo/Prueba: No hay token, usamos el ID del SQL seed
-           // IMPORTANTE: Este ID debe coincidir con el que pusiste en la tabla 'user_progress'
-           userId = "user_fantasma_clerk"; // <--- Pon aquí el UUID o texto que usaste en el INSERT de SQL
-           System.out.println("⚠️ ADVERTENCIA: Usando ID de prueba hardcodeado: " + userId);
-       }
+       //TODO: REMOVE THIS WHEN EXIST A REAL JWT
+       String clerkId = securityHelper.getCoachId(jwt);
 
-      return ResponseEntity.ok(courseService.getRoutineForToday(userId));
+      return ResponseEntity.ok(courseService.getRoutineForToday(clerkId));
    }
 }

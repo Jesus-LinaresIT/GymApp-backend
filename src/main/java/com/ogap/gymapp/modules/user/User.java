@@ -28,6 +28,10 @@ public class User {
    @Column(nullable = false, unique = true)
    private String email;
 
+    private String fullName;
+
+   private String inviteCode;
+
    @Builder.Default
    private boolean hasActiveSubscription = false;
 }
