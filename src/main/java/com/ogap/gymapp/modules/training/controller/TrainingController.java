@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/public/v1/training") // Requirement says /api/v1/training/routine/today
+@RequestMapping("/api/v1/training") // Requirement says /api/v1/training/routine/today
 @RequiredArgsConstructor
 @Tag(name = "Training Routine", description = "Operations related to daily training routines")
 public class TrainingController {
@@ -26,9 +26,6 @@ public class TrainingController {
    @Operation(summary = "Get Today's Routine", description = "Returns the routine for the current day based on user progress")
    public ResponseEntity<RoutineDayResponseDTO> getRoutineForToday(@AuthenticationPrincipal Jwt jwt) {
 
-       //TODO: REMOVE THIS WHEN EXIST A REAL JWT
-       String clerkId = securityHelper.getCoachId(jwt);
-
-      return ResponseEntity.ok(courseService.getRoutineForToday(clerkId));
+      return ResponseEntity.ok(courseService.getRoutineForToday(jwt.getSubject()));
    }
 }
