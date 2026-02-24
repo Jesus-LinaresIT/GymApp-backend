@@ -33,10 +33,8 @@ public class ContentManagementService {
    @Transactional
    public CourseResponseDTO createCourse(CreateCourseDTO dto, Jwt clerkId) {
 
-      //TODO: REMOVE THIS WHEN EXIST A REAL JWT
-      String clerkTest = securityPass.getCoachId(clerkId);
 
-      User author = userRepository.findByClerkId(clerkTest)
+      User author = userRepository.findByClerkId(clerkId.getSubject())
             .orElseThrow(() -> new RuntimeException("Author (Coach) not found"));
 
       Course course = Course.builder()

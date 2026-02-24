@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/public/v1/progress")
+@RequestMapping("/api/v1/progress")
 @RequiredArgsConstructor
 @Tag(name = "Progression", description = "User progression status")
 public class ProgressController {
@@ -29,10 +29,7 @@ public class ProgressController {
    @Operation(summary = "Get Progress Status", description = "Returns current course, phase, and completion percentage")
    public ResponseEntity<ProgressStatusDTO> getProgressStatus(@AuthenticationPrincipal Jwt jwt) {
 
-       //TODO: REMOVE THIS WHEN EXIST A REAL JWT
-       String clerkId = securityPass.getCoachId(jwt);
-
-      User user = userRepository.findByClerkId(clerkId)
+      User user = userRepository.findByClerkId(jwt.getSubject())
             .orElseThrow(() -> new RuntimeException("User not found"));
 
       return ResponseEntity.ok(progressionService.getProgressStatus(user));

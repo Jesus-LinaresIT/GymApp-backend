@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public/v1/execution")
+@RequestMapping("/api/v1/execution")
 @RequiredArgsConstructor
 @Tag(name = "Execution", description = "Workout execution and logging")
 public class ExecutionController {
@@ -31,10 +31,7 @@ public class ExecutionController {
          @AuthenticationPrincipal Jwt jwt,
          @RequestBody List<WorkoutLogRequestDTO> logs) {
 
-        //TODO: REMOVE THIS WHEN EXIST A REAL JWT
-       String clerkId = securityPass.getCoachId(jwt);
-
-       workoutService.logWorkout(clerkId, logs);
+       workoutService.logWorkout(jwt.getSubject(), logs);
 
       return ResponseEntity.ok().build();
     }
