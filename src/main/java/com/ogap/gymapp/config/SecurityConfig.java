@@ -29,13 +29,12 @@ public class SecurityConfig {
    @Bean
    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
       http
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .authorizeHttpRequests(auth -> auth
+              .csrf(AbstractHttpConfigurer::disable)
+              .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+              .authorizeHttpRequests(auth -> auth
                   .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                   .requestMatchers("/api/public/**").permitAll()
                   .anyRequest().authenticated())
-            .httpBasic(org.springframework.security.config.Customizer.withDefaults())
             .oauth2ResourceServer(oauth2 -> oauth2
                   .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
